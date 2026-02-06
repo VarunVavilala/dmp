@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Jambagh Ward 77 | Urban Spatial Studio Pro</title>
+
+    <script src="https://unpkg.com/dexie/dist/dexie.js"></script>
+    <script src="https://unpkg.com/maplibre-gl@5.17.0/dist/maplibre-gl.js"></script>
+    <link href="https://unpkg.com/maplibre-gl@5.17.0/dist/maplibre-gl.css" rel="stylesheet" />
+    <script src="https://unpkg.com/@mapbox/togeojson"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;500;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="splash-screen">
+    <div class="splash-logo">URBAN<span>STUDIO</span></div>
+    <p style="color:white; opacity:0.5; font-size:0.8rem; letter-spacing:2px;">GENERATING ANALYTICS</p>
+</div>
+
+<header id="nav-header">
+    <div class="logo">URBAN<span>STUDIO</span> // JAMBAGH 77</div>
+    <div class="nav-links">
+        <button id="btn1" class="active" onclick="move(0)">Archives</button>
+        <button id="btn2" onclick="move(1)">Manager</button>
+        <button id="btn3" onclick="move(2)">Spatial Engine</button>
+    </div>
+</header>
+
+<div id="slider">
+    <section id="home">
+        <div class="container">
+            <div class="hero-card">
+                <span class="insight-tag" style="color:var(--accent-blue)">District Overview</span>
+                <h1 style="margin-top:10px;">Jambagh Ward<br>Urban Infrastructure</h1>
+                <p style="margin-top:20px; color:var(--charcoal); font-size:1.1rem; line-height:1.6;">Integrated ward-level analytics and media repository for academic presentation.</p>
+            </div>
+
+            <div class="analytics-grid" id="charts-container">
+                <div class="analytics-card">
+                    <h3>Land Use Patterns</h3>
+                    <div class="chart-container"><canvas id="landUseChart"></canvas></div>
+                </div>
+                <div class="analytics-card">
+                    <h3>Road Width Disparity</h3>
+                    <div class="chart-container"><canvas id="roadWidthChart"></canvas></div>
+                </div>
+                <div class="analytics-card">
+                    <h3>Seasonal AQI Levels</h3>
+                    <div class="chart-container"><canvas id="aqiChart"></canvas></div>
+                </div>
+                <div class="analytics-card">
+                    <h3>Risk Assessment</h3>
+                    <div class="chart-container"><canvas id="riskChart"></canvas></div>
+                </div>
+            </div>
+            <div id="dynamic-content" style="margin-top: 40px;"></div>
+        </div>
+    </section>
+
+    <section id="manager">
+        <div class="container admin-grid">
+            <div class="admin-card">
+                <h3>GIS Data Deployment</h3>
+                <input id="titleInput" placeholder="Layer Name (e.g. Buildings)">
+                <textarea id="descInput" rows="2" placeholder="Layer Description"></textarea>
+                <label>1. Layer KML File</label>
+                <input type="file" id="kmlFile" accept=".kml">
+                <label>2. Reference Photo</label>
+                <input type="file" id="layerPhoto" accept="image/*">
+                <button class="btn-action" onclick="saveLayer()">Finalize Spatial Layer</button>
+                <h4 style="margin-top:25px;">Active Layers</h4>
+                <div id="manage-layer-list"></div>
+            </div>
+            <div class="admin-card">
+                <h3>Content Archive</h3>
+                <input id="presTitle" placeholder="Topic Identity">
+                <textarea id="presDesc" rows="3" placeholder="Description..."></textarea>
+                <input type="file" id="presFile" multiple>
+                <button class="btn-action" onclick="savePresentationTopic()">Add to Archives</button>
+                <div id="manage-pres-list"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="mapPage">
+        <div id="map-sidebar">
+            <h3>Visual Inventory</h3>
+            <p style="font-size: 0.8rem; color: #666; margin-bottom: 20px;">Toggle KML layers to visualize 3D urban data.</p>
+            <div id="layerList" style="flex:1; overflow-y:auto;"></div>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:10px;">
+                <button onclick="setMapPitch(0)" class="btn-action" style="background:#64748b; font-size:0.7rem;">2D FLAT</button>
+                <button onclick="setMapPitch(60)" class="btn-action" style="background:#4f46e5; font-size:0.7rem;">3D TILT</button>
+            </div>
+        </div>
+        <div id="mapContainer" style="flex:1; position:relative;">
+            </div>
+    </section>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
